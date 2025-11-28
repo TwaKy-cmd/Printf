@@ -6,17 +6,19 @@
 /*   By: khebert <khebert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 01:10:13 by khebert           #+#    #+#             */
-/*   Updated: 2025/11/12 02:11:34 by khebert          ###   ########.fr       */
+/*   Updated: 2025/11/22 23:39:36 by khebert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
-int	hexa_lower(int c)
+/* For %x */
+
+int	hexa_lower(unsigned long c)
 {
-	int reste;
-	int counter;
-	
+	int	reste;
+	int	counter;
+
 	counter = 0;
 	if (c >= 16)
 		counter += hexa_lower(c / 16);
@@ -36,14 +38,16 @@ int	hexa_lower(int c)
 	return (counter);
 }
 
-int	hexa_upper(int c)
+/* For %X */
+
+int	hexa_upper(unsigned long c)
 {
-	int reste;
-	int counter;
-	
+	int	reste;
+	int	counter;
+
 	counter = 0;
 	if (c >= 16)
-		counter += hexa_lower(c / 16);
+		counter += hexa_upper(c / 16);
 	reste = (c % 16);
 	if (reste < 10)
 	{
@@ -60,17 +64,18 @@ int	hexa_upper(int c)
 	return (counter);
 }
 
+/* For %p */
+
 int	print_ptr(void *ptr)
 {
-	unsigned long cast_ptr;
-	unsigned int counter;
-	unsigned int adresse;
+	unsigned long	cast_ptr;
+	unsigned int	counter;
 
 	cast_ptr = (unsigned long) ptr;
 	if (!cast_ptr)
 	{
 		write(1, "(nil)", 5);
-		counter = 5;	
+		counter = 5;
 	}
 	if (cast_ptr)
 	{
